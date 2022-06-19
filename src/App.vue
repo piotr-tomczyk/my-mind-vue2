@@ -16,7 +16,7 @@ export default {
     HeaderView,
     DiaryView,
     FooterView,
-  }
+  },
 }
 </script>
 
