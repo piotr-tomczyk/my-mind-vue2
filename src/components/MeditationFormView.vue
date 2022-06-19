@@ -22,34 +22,19 @@
 </template>
 
 <script>
-import {MeditationContainer, TextAreaContainer} from "@/DayContainer";
+import {BASIC_MEDITATION} from "@/utils";
 export default {
   name: "MeditationFormView",
   emits: ['submit-meditation'],
   data: function (){
     return {
-      meditation: new MeditationContainer("",
-          0,
-          [
-              new TextAreaContainer("How did your meditation feel?", ""),
-              new TextAreaContainer("What kind of thoughts came to mind?", ""),
-              new TextAreaContainer("What might you do differently next time you practice " +
-                  "this same meditation technique - posture, mudra, length?", ""),
-          ])
+      meditation: JSON.parse(JSON.stringify(BASIC_MEDITATION)),
     }
   },
   methods:{
     AddMeditation(){
-      console.log("MEDITATION FORM", this.meditation);
       this.$emit('submit-meditation', this.meditation);
-      this.meditation = new MeditationContainer("",
-          0,
-          [
-            new TextAreaContainer("How did your meditation feel?", ""),
-            new TextAreaContainer("What kind of thoughts came to mind?", ""),
-            new TextAreaContainer("What might you do differently next time you practice " +
-                "this same meditation technique - posture, mudra, length?", ""),
-          ]);
+      this.meditation = JSON.parse(JSON.stringify(BASIC_MEDITATION));
     },
   }
 }

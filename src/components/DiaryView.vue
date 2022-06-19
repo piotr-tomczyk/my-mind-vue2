@@ -4,35 +4,19 @@
       <DayView :day="day" :indexOfDay="index" @add-meditation="AddMeditation"></DayView>
     </div>
     <button @click="ChangeShowDayFormTrigger">Add Day</button>
-    <form v-on:submit.prevent="AddDay" v-if="showDaysForm">
-      <div>
-        <div>Day: </div>
-        <input type="text" v-model="currentDate.day" placeholder="Day">
-      </div>
-      <div>
-        <div>Month: </div>
-        <input type="text" v-model="currentDate.month" placeholder="Month">
-      </div>
-      <div>
-        <div>Year: </div>
-        <input type="text" v-model="currentDate.year" placeholder="Year">
-      </div>
-      <input
-          type="submit"
-          value="Add"
-      >
-    </form>
+    <DayFormView v-if="showDaysForm" @add-day="AddDay"></DayFormView>
   </div>
 </template>
 
 <script>
- import {DayContainer} from "@/DayContainer";
+import {DayContainer} from "@/utils";
  import DayView from "@/components/DayView";
-
+ import DayFormView from "@/components/DayFormView";
 export default {
   name: "DiaryView",
   components:{
     DayView,
+    DayFormView,
   },
   data: function (){
     return {
@@ -41,33 +25,23 @@ export default {
         showMeditationForm: false,
     }
   },
-  computed:{
-    currentDate () {
-      let date = new Date();
-      return {
-        day: date.getDate().toString(),
-        month: date.getMonth().toString(),
-        year: date.getFullYear().toString(),
-      };
-    }
-  },
   methods: {
     ChangeShowDayFormTrigger() {
       this.showDaysForm = !this.showDaysForm;
     },
-    AddDay() {
+    AddDay(dayToAdd) {
       let foundDays = this.days.filter((day)=>{
         if(
-            day.date.day === this.currentDate.day &&
-            day.date.month === this.currentDate.month &&
-            day.date.year === this.currentDate.year
+            day.date.day === dayToAdd.day &&
+            day.date.month === dayToAdd.month &&
+            day.date.year === dayToAdd.year
         ) {
           return true;
         }
         return false;
         })
       if(foundDays.length === 0){
-        this.days.push(new DayContainer(JSON.parse(JSON.stringify(this.currentDate))));
+        this.days.push(new DayContainer(JSON.parse(JSON.stringify(dayToAdd))));
         let localDays = localStorage.getItem("days");
         if (localDays){
           localDays = JSON.parse(localDays);
@@ -80,9 +54,7 @@ export default {
       }
     },
     AddMeditation(meditation, index){
-      console.log("DIARY VIEW", meditation, index);
       this.days[index].meditations.push(meditation);
-      //TODO: dodac klase z tym, stworzyc osobny component dla day View, forma itd
       let localDays = localStorage.getItem("days");
       if (localDays){
         localDays = JSON.parse(localDays);
@@ -92,12 +64,6 @@ export default {
         localDays = {days: this.days};
       }
       localStorage.setItem("days", JSON.stringify(localDays))
-      this.meditation.type = "";
-      this.meditation.duration = 0;
-      this.meditation.textAreas.forEach((el, index)=>{
-        this.meditation.textAreas[index] = "";
-      });
-      this.showMeditationForm = false;
     }
   },
   created: function () {

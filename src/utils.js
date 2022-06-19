@@ -17,3 +17,11 @@ export class TextAreaContainer {
         this.content = content;
     }
 }
+export const BASIC_MEDITATION = new MeditationContainer("",
+    0,
+    [
+        new TextAreaContainer("How did your meditation feel?", ""),
+        new TextAreaContainer("What kind of thoughts came to mind?", ""),
+        new TextAreaContainer("What might you do differently next time you practice " +
+            "this same meditation technique - posture, mudra, length?", ""),
+    ]);

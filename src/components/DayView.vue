@@ -29,7 +29,7 @@ export default {
       this.showMeditationForm = !this.showMeditationForm;
     },
     SubmitMeditation(meditation){
-        console.log("DAY VIEW", meditation);
+        this.ChangeShowMeditationFormTrigger();
         this.$emit('add-meditation', meditation, this.indexOfDay);
     }
   }
