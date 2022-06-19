@@ -57,10 +57,14 @@ export default {
     },
     AddDay() {
       let foundDays = this.days.filter((day)=>{
-        return day.date.day === this.currentDate.day &&
+        if(
+            day.date.day === this.currentDate.day &&
             day.date.month === this.currentDate.month &&
-            day.date.year === this.currentDate.year;
-
+            day.date.year === this.currentDate.year
+        ) {
+          return true;
+        }
+        return false;
         })
       if(foundDays.length === 0){
         this.days.push(new DayContainer(JSON.parse(JSON.stringify(this.currentDate))));
