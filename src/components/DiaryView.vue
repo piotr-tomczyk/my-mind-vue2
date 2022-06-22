@@ -42,19 +42,14 @@ export default {
         })
       if(foundDays.length === 0){
         this.days.push(new DayContainer(JSON.parse(JSON.stringify(dayToAdd))));
-        let localDays = localStorage.getItem("days");
-        if (localDays){
-          localDays = JSON.parse(localDays);
-          localDays.days = this.days;
-        }
-        else {
-          localDays = {days: this.days};
-        }
-        localStorage.setItem("days", JSON.stringify(localDays))
+        this.SaveDaysToLocalStorage();
       }
     },
     AddMeditation(meditation, index){
       this.days[index].meditations.push(meditation);
+      this.SaveDaysToLocalStorage();
+    },
+    SaveDaysToLocalStorage(){
       let localDays = localStorage.getItem("days");
       if (localDays){
         localDays = JSON.parse(localDays);
@@ -64,12 +59,16 @@ export default {
         localDays = {days: this.days};
       }
       localStorage.setItem("days", JSON.stringify(localDays))
-    }
+    },
+    GetDaysFromLocalStorage(){
+      let localDays = localStorage.getItem("days");
+      if (localDays){
+        this.days = JSON.parse(localDays).days;
+      }
+    },
   },
   created: function () {
-    let localDays = localStorage.getItem("days");
-    if (localDays)
-      this.days = JSON.parse(localDays).days;
+    this.GetDaysFromLocalStorage();
   }
 }
 </script>
