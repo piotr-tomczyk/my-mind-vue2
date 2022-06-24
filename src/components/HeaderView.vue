@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  name: "HeaderView"
-}
+  name: 'HeaderView',
+};
 </script>
 
 <style scoped>

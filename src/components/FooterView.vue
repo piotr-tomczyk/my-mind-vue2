@@ -4,13 +4,13 @@
 
 <script>
 export default {
-  name: "FooterView"
-}
+  name: 'FooterView',
+};
 </script>
 
 <style scoped>
-  #footer{
-    padding: 2em;
-    background-color: bisque;
-  }
+#footer {
+  padding: 2em;
+  background-color: bisque;
+}
 </style>

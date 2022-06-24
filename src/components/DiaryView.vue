@@ -9,73 +9,73 @@
 </template>
 
 <script>
-import {DayContainer} from "@/utils";
- import DayView from "@/components/DayView";
- import DayFormView from "@/components/DayFormView";
+import { DayContainer } from '@/utils';
+import DayView from '@/components/DayView';
+import DayFormView from '@/components/DayFormView';
+
 export default {
-  name: "DiaryView",
-  components:{
+  name: 'DiaryView',
+  components: {
     DayView,
     DayFormView,
   },
-  data: function (){
+  data() {
     return {
-        days: [],
-        showDaysForm: false,
-        showMeditationForm: false,
-    }
+      days: [],
+      showDaysForm: false,
+      showMeditationForm: false,
+    };
   },
   methods: {
     ChangeShowDayFormTrigger() {
       this.showDaysForm = !this.showDaysForm;
     },
     AddDay(dayToAdd) {
-      let foundDays = this.days.filter((day)=>{
-        if(
-            day.date.day === dayToAdd.day &&
-            day.date.month === dayToAdd.month &&
-            day.date.year === dayToAdd.year
+      const foundDays = this.days.filter((day) => {
+        if (
+          day.date.day === dayToAdd.day
+            && day.date.month === dayToAdd.month
+            && day.date.year === dayToAdd.year
         ) {
           return true;
         }
         return false;
-        })
-      if(foundDays.length === 0){
+      });
+      if (foundDays.length === 0) {
         this.days.push(new DayContainer(JSON.parse(JSON.stringify(dayToAdd))));
         this.SaveDaysToLocalStorage();
       }
     },
-    AddMeditation(meditation, index){
+    AddMeditation(meditation, index) {
       this.days[index].meditations.push(meditation);
       this.SaveDaysToLocalStorage();
     },
-    SaveDaysToLocalStorage(){
-      let localDays = localStorage.getItem("days");
-      if (localDays){
+    SaveDaysToLocalStorage() {
+      let localDays = localStorage.getItem('days');
+      if (localDays) {
         localDays = JSON.parse(localDays);
         localDays.days = this.days;
+      } else {
+        localDays = { days: this.days };
       }
-      else {
-        localDays = {days: this.days};
-      }
-      localStorage.setItem("days", JSON.stringify(localDays))
+      localStorage.setItem('days', JSON.stringify(localDays));
     },
-    GetDaysFromLocalStorage(){
-      let localDays = localStorage.getItem("days");
-      if (localDays){
+    GetDaysFromLocalStorage() {
+      const localDays = localStorage.getItem('days');
+      if (localDays) {
         this.days = JSON.parse(localDays).days;
       }
     },
   },
-  created: function () {
+  created() {
     this.GetDaysFromLocalStorage();
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-  #diary{
-    padding:2em;
-    background-color: #42b983;
-  }
+#diary {
+  padding: 2em;
+  background-color: #42b983;
+}
 </style>

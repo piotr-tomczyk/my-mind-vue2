@@ -1,39 +1,40 @@
 <template>
   <div>
-    <div>{{day.date}}</div>
-    <div>{{day.meditations}}</div>
+    <div>{{ day.date }}</div>
+    <div>{{ day.meditations }}</div>
     <button @click="ChangeShowMeditationFormTrigger">AddMeditation</button>
     <MeditationFormView v-if="showMeditationForm" @submit-meditation="SubmitMeditation"></MeditationFormView>
   </div>
 </template>
 
 <script>
-import MeditationFormView from "@/components/MeditationFormView";
+import MeditationFormView from '@/components/MeditationFormView';
+
 export default {
-  name: "DayView",
-  components:{
+  name: 'DayView',
+  components: {
     MeditationFormView,
   },
   emits: ['add-meditation'],
-  props:{
+  props: {
     day: Object,
     indexOfDay: Number,
   },
-  data:function (){
-    return{
+  data() {
+    return {
       showMeditationForm: false,
-    }
+    };
   },
-  methods:{
-    ChangeShowMeditationFormTrigger(){
+  methods: {
+    ChangeShowMeditationFormTrigger() {
       this.showMeditationForm = !this.showMeditationForm;
     },
-    SubmitMeditation(meditation){
-        this.ChangeShowMeditationFormTrigger();
-        this.$emit('add-meditation', meditation, this.indexOfDay);
-    }
-  }
-}
+    SubmitMeditation(meditation) {
+      this.ChangeShowMeditationFormTrigger();
+      this.$emit('add-meditation', meditation, this.indexOfDay);
+    },
+  },
+};
 </script>
 
 <style scoped>

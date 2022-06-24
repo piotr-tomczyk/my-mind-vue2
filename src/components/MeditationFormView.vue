@@ -22,22 +22,23 @@
 </template>
 
 <script>
-import {BASIC_MEDITATION} from "@/utils";
+import { BASIC_MEDITATION } from '@/utils';
+
 export default {
-  name: "MeditationFormView",
+  name: 'MeditationFormView',
   emits: ['submit-meditation'],
-  data: function (){
+  data() {
     return {
       meditation: JSON.parse(JSON.stringify(BASIC_MEDITATION)),
-    }
+    };
   },
-  methods:{
-    AddMeditation(){
+  methods: {
+    AddMeditation() {
       this.$emit('submit-meditation', this.meditation);
       this.meditation = JSON.parse(JSON.stringify(BASIC_MEDITATION));
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
