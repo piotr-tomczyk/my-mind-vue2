@@ -29,9 +29,9 @@ export default {
     ChangeShowMeditationFormTrigger() {
       this.showMeditationForm = !this.showMeditationForm;
     },
-    SubmitMeditation(meditation) {
-      this.ChangeShowMeditationFormTrigger();
-      this.$emit('add-meditation', meditation, this.indexOfDay);
+    SubmitMeditation() {
+      this.$emit('add-meditation', this.indexOfDay);
+      this.showMeditationForm = false;
     },
   },
 };

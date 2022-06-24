@@ -9,15 +9,22 @@
 </template>
 
 <script>
-import { DayContainer } from '@/utils';
 import DayView from '@/components/DayView';
 import DayFormView from '@/components/DayFormView';
+import {useMeditationStore} from '@/stores/meditationStore';
 
 export default {
   name: 'DiaryView',
   components: {
     DayView,
     DayFormView,
+  },
+  setup() {
+    const store = useMeditationStore()
+
+    return {
+      store,
+    };
   },
   data() {
     return {
@@ -33,7 +40,7 @@ export default {
     AddDay(dayToAdd) {
       const foundDays = this.days.filter((day) => {
         if (
-          day.date.day === dayToAdd.day
+            day.date.day === dayToAdd.day
             && day.date.month === dayToAdd.month
             && day.date.year === dayToAdd.year
         ) {
@@ -46,8 +53,10 @@ export default {
         this.SaveDaysToLocalStorage();
       }
     },
-    AddMeditation(meditation, index) {
-      this.days[index].meditations.push(meditation);
+    AddMeditation(index) {
+      this.days[index].meditations.push(JSON.parse(JSON.stringify(this.store.meditation)));
+      this.store.resetMeditation();
+      console.log(this.store.meditation);
       this.SaveDaysToLocalStorage();
     },
     SaveDaysToLocalStorage() {
@@ -56,7 +65,7 @@ export default {
         localDays = JSON.parse(localDays);
         localDays.days = this.days;
       } else {
-        localDays = { days: this.days };
+        localDays = {days: this.days};
       }
       localStorage.setItem('days', JSON.stringify(localDays));
     },
@@ -67,7 +76,7 @@ export default {
       }
     },
   },
-  created() {
+  mounted() {
     this.GetDaysFromLocalStorage();
   },
 };

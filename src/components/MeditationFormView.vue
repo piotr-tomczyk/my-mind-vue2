@@ -1,16 +1,16 @@
 <template>
   <form v-on:submit.prevent="AddMeditation">
     <div>
-      <div>Type of Meditation: </div>
+      <div>Type of Meditation:</div>
       <input type="text" v-model="meditation.type" placeholder="Type of Meditation">
     </div>
     <div>
-      <div>Duration: </div>
+      <div>Duration:</div>
       <input type="number" v-model="meditation.duration" placeholder="Duration">
     </div>
     <div v-for="(textArea, index) of meditation.textAreas" v-bind:key="index">
       <div>
-        <div>{{textArea.title}}</div>
+        <div>{{ textArea.title }}</div>
         <textarea v-model="textArea.content" :placeholder="textArea.title"></textarea>
       </div>
     </div>
@@ -22,22 +22,32 @@
 </template>
 
 <script>
-import { BASIC_MEDITATION } from '@/utils';
+import {useMeditationStore} from "@/stores/meditationStore";
 
 export default {
   name: 'MeditationFormView',
   emits: ['submit-meditation'],
+  setup() {
+    const store = useMeditationStore();
+
+    return {
+      store
+    };
+  },
   data() {
     return {
-      meditation: JSON.parse(JSON.stringify(BASIC_MEDITATION)),
+      meditation: null,
     };
   },
   methods: {
     AddMeditation() {
-      this.$emit('submit-meditation', this.meditation);
-      this.meditation = JSON.parse(JSON.stringify(BASIC_MEDITATION));
+      this.$emit('submit-meditation');
     },
   },
+  beforeMount() {
+    console.log(this.store);
+    this.meditation = this.store.meditation;
+  }
 };
 </script>
 
