@@ -5,11 +5,6 @@ export const useMeditationStore = defineStore("meditation", {
   state: () => ({
     meditation: JSON.parse(JSON.stringify(BASIC_MEDITATION)),
   }),
-  getters: {
-    getMeditation() {
-      return this.meditation;
-    },
-  },
   actions: {
     setMeditation(newMeditation) {
       this.meditation = newMeditation;
