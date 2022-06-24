@@ -2,8 +2,8 @@
   <div>
     <div>{{ day.date }}</div>
     <div>{{ day.meditations }}</div>
-    <button @click="ChangeShowMeditationFormTrigger">AddMeditation</button>
-    <MeditationFormView v-if="showMeditationForm" @submit-meditation="SubmitMeditation"></MeditationFormView>
+    <button @click="changeShowMeditationFormTrigger">AddMeditation</button>
+    <MeditationFormView v-if="showMeditationForm" @submit-meditation="submitMeditation"></MeditationFormView>
   </div>
 </template>
 
@@ -26,10 +26,10 @@ export default {
     };
   },
   methods: {
-    ChangeShowMeditationFormTrigger() {
+    changeShowMeditationFormTrigger() {
       this.showMeditationForm = !this.showMeditationForm;
     },
-    SubmitMeditation() {
+    submitMeditation() {
       this.$emit('add-meditation', this.indexOfDay);
       this.showMeditationForm = false;
     },

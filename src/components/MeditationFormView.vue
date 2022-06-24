@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="AddMeditation">
+  <form v-on:submit.prevent="addMeditation">
     <div>
       <div>Type of Meditation:</div>
       <input type="text" v-model="meditation.type" placeholder="Type of Meditation">
@@ -40,7 +40,7 @@ export default {
     };
   },
   methods: {
-    AddMeditation() {
+    addMeditation() {
       this.$emit('submit-meditation');
     },
   },

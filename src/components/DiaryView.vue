@@ -1,10 +1,10 @@
 <template>
   <div id="diary">
     <div id="days" v-for="(day, index) of days" v-bind:key="index">
-      <DayView :day="day" :indexOfDay="index" @add-meditation="AddMeditation"></DayView>
+      <DayView :day="day" :indexOfDay="index" @add-meditation="addMeditation"></DayView>
     </div>
-    <button @click="ChangeShowDayFormTrigger">Add Day</button>
-    <DayFormView v-if="showDaysForm" @add-day="AddDay"></DayFormView>
+    <button @click="changeShowDayFormTrigger">Add Day</button>
+    <DayFormView v-if="showDaysForm" @add-day="addDay"></DayFormView>
   </div>
 </template>
 
@@ -12,6 +12,7 @@
 import DayView from '@/components/DayView';
 import DayFormView from '@/components/DayFormView';
 import {useMeditationStore} from '@/stores/meditationStore';
+import {DayContainer} from "@/utils";
 
 export default {
   name: 'DiaryView',
@@ -34,10 +35,10 @@ export default {
     };
   },
   methods: {
-    ChangeShowDayFormTrigger() {
+    changeShowDayFormTrigger() {
       this.showDaysForm = !this.showDaysForm;
     },
-    AddDay(dayToAdd) {
+    addDay(dayToAdd) {
       const foundDays = this.days.filter((day) => {
         if (
             day.date.day === dayToAdd.day
@@ -50,16 +51,16 @@ export default {
       });
       if (foundDays.length === 0) {
         this.days.push(new DayContainer(JSON.parse(JSON.stringify(dayToAdd))));
-        this.SaveDaysToLocalStorage();
+        this.saveDaysToLocalStorage();
       }
     },
-    AddMeditation(index) {
+    addMeditation(index) {
       this.days[index].meditations.push(JSON.parse(JSON.stringify(this.store.meditation)));
       this.store.resetMeditation();
       console.log(this.store.meditation);
-      this.SaveDaysToLocalStorage();
+      this.saveDaysToLocalStorage();
     },
-    SaveDaysToLocalStorage() {
+    saveDaysToLocalStorage() {
       let localDays = localStorage.getItem('days');
       if (localDays) {
         localDays = JSON.parse(localDays);
@@ -69,7 +70,7 @@ export default {
       }
       localStorage.setItem('days', JSON.stringify(localDays));
     },
-    GetDaysFromLocalStorage() {
+    getDaysFromLocalStorage() {
       const localDays = localStorage.getItem('days');
       if (localDays) {
         this.days = JSON.parse(localDays).days;
@@ -77,7 +78,7 @@ export default {
     },
   },
   mounted() {
-    this.GetDaysFromLocalStorage();
+    this.getDaysFromLocalStorage();
   },
 };
 </script>
