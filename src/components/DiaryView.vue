@@ -52,6 +52,7 @@ export default {
       if (foundDays.length === 0) {
         this.days.push(new DayContainer(JSON.parse(JSON.stringify(dayToAdd))));
         this.saveDaysToLocalStorage();
+        this.changeShowDayFormTrigger();
       }
     },
     addMeditation(index) {
