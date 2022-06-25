@@ -8,9 +8,9 @@ export default {
 };
 </script>
 
-<style scoped>
-  #header{
-    padding: 2em;
-    background-color: aqua;
-  }
+<style scoped lang="scss">
+#header {
+  padding: 2em;
+  background-color: aqua;
+}
 </style>

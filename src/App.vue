@@ -21,7 +21,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 * {
   margin: 0;
   padding: 0;
@@ -41,7 +41,7 @@ export default {
   align-items: stretch;
 }
 </style>
-<style scoped>
+<style scoped lang="scss">
 #header {
   flex-grow: 0.1;
 }

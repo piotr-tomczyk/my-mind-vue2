@@ -8,7 +8,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #footer {
   padding: 2em;
   background-color: bisque;

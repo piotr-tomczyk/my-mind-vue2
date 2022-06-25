@@ -84,7 +84,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #diary {
   padding: 2em;
   background-color: #42b983;
